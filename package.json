@@ -1,0 +1,24 @@
+{
+  "name": "geo-auto-marketplace",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Geolokatsiyaga asoslangan avtomobil savdo platformasi monorepo.",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "lint": "npm run lint -w frontend",
+    "typecheck": "npm run typecheck -w backend && npm run typecheck -w frontend",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,css,sql}\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.5.3"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  }
+}

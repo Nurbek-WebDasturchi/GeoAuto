@@ -1,0 +1,16 @@
+node_modules
+dist
+build
+.vite
+.env
+.env.local
+.env.production
+.DS_Store
+Thumbs.db
+coverage
+*.log
+*.err
+uploads
+backend/prisma/dev.db
+frontend/.vercel
+backend/.render

@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum ListingStatus {
+  DRAFT
+  PENDING
+  ACTIVE
+  REJECTED
+  SOLD
+}
+
+enum FuelType {
+  PETROL
+  GAS
+  HYBRID
+  ELECTRIC
+  DIESEL
+}
+
+enum TransmissionType {
+  MANUAL
+  AUTOMATIC
+}
+
+enum BodyType {
+  SEDAN
+  HATCHBACK
+  SUV
+  COUPE
+  WAGON
+  PICKUP
+  VAN
+  MINIVAN
+}
+
+model Profile {
+  id             String           @id @default(uuid()) @db.Uuid
+  email          String           @unique
+  passwordHash   String           @map("password_hash")
+  fullName       String           @map("full_name")
+  phone          String
+  avatarUrl      String?          @map("avatar_url")
+  role           UserRole         @default(USER)
+  region         String           @default("Toshkent")
+  listings       Listing[]        @relation("OwnerListings")
+  favorites      Favorite[]
+  recentlyViewed RecentlyViewed[]
+  reports        Report[]
+  sentMessages   Message[]
+  notifications  Notification[]
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
+model Listing {
+  id           String           @id @default(uuid()) @db.Uuid
+  ownerId      String           @map("owner_id") @db.Uuid
+  owner        Profile          @relation("OwnerListings", fields: [ownerId], references: [id], onDelete: Cascade)
+  title        String
+  brand        String
+  model        String
+  year         Int
+  priceUsd     Int              @map("price_usd")
+  mileageKm    Int              @map("mileage_km")
+  region       String
+  district     String
+  address      String?
+  latitude     Decimal
+  longitude    Decimal
+  fuelType     FuelType         @map("fuel_type")
+  transmission TransmissionType
+  bodyType     BodyType         @map("body_type")
+  color        String
+  engineLiters Decimal?         @map("engine_liters")
+  description  String
+  isPremium    Boolean          @default(false) @map("is_premium")
+  isTop        Boolean          @default(false) @map("is_top")
+  status       ListingStatus    @default(PENDING)
+  viewCount    Int              @default(0) @map("view_count")
+  images       ListingImage[]
+  favorites    Favorite[]
+  viewedBy     RecentlyViewed[]
+  reports      Report[]
+  conversations Conversation[]
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+
+  @@map("listings")
+}
+
+model ListingImage {
+  id        String   @id @default(uuid()) @db.Uuid
+  listingId String   @map("listing_id") @db.Uuid
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  url       String
+  path      String
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("listing_images")
+}
+
+model Favorite {
+  userId    String   @map("user_id") @db.Uuid
+  listingId String   @map("listing_id") @db.Uuid
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@id([userId, listingId])
+  @@map("favorites")
+}
+
+model RecentlyViewed {
+  userId    String   @map("user_id") @db.Uuid
+  listingId String   @map("listing_id") @db.Uuid
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  viewedAt  DateTime @default(now()) @map("viewed_at")
+
+  @@id([userId, listingId])
+  @@map("recently_viewed")
+}
+
+model Report {
+  id         String   @id @default(uuid()) @db.Uuid
+  reporterId String  @map("reporter_id") @db.Uuid
+  listingId  String  @map("listing_id") @db.Uuid
+  reporter   Profile @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  listing    Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  reason     String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("reports")
+}
+
+model Conversation {
+  id        String    @id @default(uuid()) @db.Uuid
+  listingId String    @map("listing_id") @db.Uuid
+  buyerId   String    @map("buyer_id") @db.Uuid
+  sellerId  String    @map("seller_id") @db.Uuid
+  listing   Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@unique([listingId, buyerId, sellerId])
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(uuid()) @db.Uuid
+  conversationId String       @map("conversation_id") @db.Uuid
+  senderId       String       @map("sender_id") @db.Uuid
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender         Profile      @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body           String
+  readAt         DateTime?    @map("read_at")
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  @@map("messages")
+}
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  readAt    DateTime? @map("read_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notifications")
+}
