@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { SlidersHorizontal } from "lucide-react";
 import { ListingCard } from "@/components/listings/listing-card";
 import { ListingMap } from "@/components/listings/listing-map";
@@ -9,30 +9,23 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
-import { favoriteListing, getListings } from "@/features/listings/listing-api";
+import { getListings } from "@/features/listings/listing-api";
+import { useFavoriteListing } from "@/features/listings/use-favorite-listing";
 import { regions } from "@/lib/utils";
 
 export const ListingsPage = () => {
   const [filters, setFilters] = useState({ q: "", region: "", brand: "", minPrice: "", maxPrice: "", sort: "newest" });
   const query = useMemo(() => filters, [filters]);
-  const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ["listings", query], queryFn: () => getListings(query) });
-  const favorite = useMutation({
-    mutationFn: favoriteListing,
-    onSuccess: () => {
-      toast({ title: "Sevimlilarga qo‘shildi" });
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
-    }
-  });
+  const favorite = useFavoriteListing();
 
   return (
     <main className="container py-6">
-      <Seo title="E’lonlar" description="O‘zbekiston bo‘yicha avtomobil e’lonlarini qidirish va filterlash." />
+      <Seo title="E'lonlar" description="O'zbekiston bo'yicha avtomobil e'lonlarini qidirish va filterlash." />
       <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <h1 className="text-3xl font-extrabold">Avtomobillar</h1>
-          <p className="mt-1 text-muted-foreground">Model, narx, region va masofa bo‘yicha aniq qidiring.</p>
+          <p className="mt-1 text-muted-foreground">Model, narx, region va masofa bo'yicha aniq qidiring.</p>
         </div>
         <Button variant="outline"><SlidersHorizontal className="h-4 w-4" /> Filterlar</Button>
       </div>
@@ -53,7 +46,7 @@ export const ListingsPage = () => {
             {isLoading ? Array.from({ length: 9 }).map((_, index) => <ListingSkeleton key={index} />) : null}
             {!isLoading && data?.data.map((listing) => <ListingCard key={listing.id} listing={listing} onFavorite={(id) => favorite.mutate(id)} />)}
           </div>
-          {!isLoading && !data?.data.length ? <EmptyState title="E’lon topilmadi">Filterlarni yumshatib qayta urinib ko‘ring.</EmptyState> : null}
+          {!isLoading && !data?.data.length ? <EmptyState title="E'lon topilmadi">Filterlarni yumshatib qayta urinib ko'ring.</EmptyState> : null}
         </section>
         <aside className="h-[520px] lg:sticky lg:top-20">
           <ListingMap listings={data?.data ?? []} />

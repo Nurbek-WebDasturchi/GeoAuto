@@ -50,7 +50,17 @@ export const ListingCard = ({ listing, onFavorite }: { listing: Listing; onFavor
             <Eye className="h-4 w-4" />
             {listing.viewCount}
           </span>
-          <Button variant="ghost" size="sm" onClick={() => onFavorite?.(listing.id)} aria-label="Sevimliga qo‘shish">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              onFavorite?.(listing.id);
+            }}
+            aria-label="Sevimliga qo'shish"
+          >
             <Heart className="h-4 w-4" />
           </Button>
         </div>

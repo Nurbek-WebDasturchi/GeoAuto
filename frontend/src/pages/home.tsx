@@ -6,9 +6,11 @@ import { Seo } from "@/components/layout/seo";
 import { ListingCard } from "@/components/listings/listing-card";
 import { ListingSkeleton } from "@/components/listings/listing-skeleton";
 import { getListings } from "@/features/listings/listing-api";
+import { useFavoriteListing } from "@/features/listings/use-favorite-listing";
 
 export const HomePage = () => {
   const { data, isLoading } = useQuery({ queryKey: ["home-listings"], queryFn: () => getListings({ limit: 8 }) });
+  const favorite = useFavoriteListing();
 
   return (
     <main>
@@ -65,7 +67,7 @@ export const HomePage = () => {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {isLoading
             ? Array.from({ length: 8 }).map((_, index) => <ListingSkeleton key={index} />)
-            : data?.data.map((listing) => <ListingCard key={listing.id} listing={listing} />)}
+            : data?.data.map((listing) => <ListingCard key={listing.id} listing={listing} onFavorite={(id) => favorite.mutate(id)} />)}
         </div>
       </section>
     </main>

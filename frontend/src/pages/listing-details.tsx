@@ -7,7 +7,8 @@ import { Seo } from "@/components/layout/seo";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/use-toast";
-import { favoriteListing, getListing, getSimilarListings, reportListing } from "@/features/listings/listing-api";
+import { getListing, getSimilarListings, reportListing } from "@/features/listings/listing-api";
+import { useFavoriteListing } from "@/features/listings/use-favorite-listing";
 import { startConversation } from "@/features/messages/message-api";
 import { formatKm, formatUsd } from "@/lib/utils";
 
@@ -15,9 +16,9 @@ export const ListingDetailsPage = () => {
   const { id = "" } = useParams();
   const { data, isLoading } = useQuery({ queryKey: ["listing", id], queryFn: () => getListing(id), enabled: Boolean(id) });
   const { data: similar } = useQuery({ queryKey: ["similar", id], queryFn: () => getSimilarListings(id), enabled: Boolean(id) });
-  const favorite = useMutation({ mutationFn: favoriteListing, onSuccess: () => toast({ title: "Sevimlilarga qo‘shildi" }) });
-  const report = useMutation({ mutationFn: () => reportListing(id, "E’lon ma’lumotlari shubhali yoki noto‘g‘ri."), onSuccess: () => toast({ title: "Shikoyat yuborildi" }) });
-  const message = useMutation({ mutationFn: () => startConversation(id, "Salom, e’loningiz bo‘yicha ma’lumot olmoqchiman."), onSuccess: () => toast({ title: "Xabar yuborildi" }) });
+  const favorite = useFavoriteListing();
+  const report = useMutation({ mutationFn: () => reportListing(id, "E'lon ma'lumotlari shubhali yoki noto'g'ri."), onSuccess: () => toast({ title: "Shikoyat yuborildi" }) });
+  const message = useMutation({ mutationFn: () => startConversation(id, "Salom, e'loningiz bo'yicha ma'lumot olmoqchiman."), onSuccess: () => toast({ title: "Xabar yuborildi" }) });
 
   if (isLoading) return <main className="container py-8"><Skeleton className="h-[420px] w-full" /></main>;
   if (!data?.data) return null;
@@ -31,7 +32,7 @@ export const ListingDetailsPage = () => {
           <div className="grid gap-3 sm:grid-cols-2">
             {(listing.images.length ? listing.images : [{ id: "empty", url: "", path: "", sortOrder: 0 }]).map((image) => (
               <div key={image.id} className="aspect-[4/3] overflow-hidden rounded-lg bg-muted">
-                {image.url ? <img src={image.url} alt={listing.title} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-muted-foreground">Rasm yo‘q</div>}
+                {image.url ? <img src={image.url} alt={listing.title} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-muted-foreground">Rasm yo'q</div>}
               </div>
             ))}
           </div>
@@ -41,7 +42,7 @@ export const ListingDetailsPage = () => {
             <dl className="mt-6 grid gap-3 sm:grid-cols-3">
               <Spec label="Yil" value={String(listing.year)} />
               <Spec label="Probeg" value={formatKm(listing.mileageKm)} />
-              <Spec label="Yoqilg‘i" value={listing.fuelType} />
+              <Spec label="Yoqilg'i" value={listing.fuelType} />
               <Spec label="Uzatma" value={listing.transmission} />
               <Spec label="Kuzov" value={listing.bodyType} />
               <Spec label="Rang" value={listing.color} />
@@ -62,12 +63,14 @@ export const ListingDetailsPage = () => {
               <Button variant="ghost" onClick={() => report.mutate()}><ShieldAlert className="h-4 w-4" /> Shikoyat</Button>
             </div>
           </div>
-          <Button asChild variant="outline" className="w-full"><Link to={`/edit/${listing.id}`}>E’lonni tahrirlash</Link></Button>
+          <Button asChild variant="outline" className="w-full"><Link to={`/edit/${listing.id}`}>E'lonni tahrirlash</Link></Button>
         </aside>
       </div>
       <section className="mt-10">
-        <h2 className="mb-4 text-2xl font-bold">O‘xshash e’lonlar</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{similar?.data.map((item) => <ListingCard key={item.id} listing={item} />)}</div>
+        <h2 className="mb-4 text-2xl font-bold">O'xshash e'lonlar</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {similar?.data.map((item) => <ListingCard key={item.id} listing={item} onFavorite={(listingId) => favorite.mutate(listingId)} />)}
+        </div>
       </section>
     </main>
   );
