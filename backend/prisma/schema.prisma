@@ -10,6 +10,8 @@ datasource db {
 enum UserRole {
   USER
   ADMIN
+
+  @@map("user_role")
 }
 
 enum ListingStatus {
@@ -18,6 +20,8 @@ enum ListingStatus {
   ACTIVE
   REJECTED
   SOLD
+
+  @@map("listing_status")
 }
 
 enum FuelType {
@@ -26,11 +30,15 @@ enum FuelType {
   HYBRID
   ELECTRIC
   DIESEL
+
+  @@map("fuel_type")
 }
 
 enum TransmissionType {
   MANUAL
   AUTOMATIC
+
+  @@map("transmission_type")
 }
 
 enum BodyType {
@@ -42,6 +50,8 @@ enum BodyType {
   PICKUP
   VAN
   MINIVAN
+
+  @@map("body_type")
 }
 
 model Profile {
