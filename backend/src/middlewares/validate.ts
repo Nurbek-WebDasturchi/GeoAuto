@@ -7,9 +7,17 @@ export const validate =
       body: req.body,
       query: req.query,
       params: req.params
-    });
-    req.body = parsed.body ?? req.body;
-    req.query = parsed.query ?? req.query;
-    req.params = parsed.params ?? req.params;
+    }) as { body?: unknown; query?: unknown; params?: unknown };
+
+    if (parsed.body !== undefined) req.body = parsed.body;
+    if (parsed.query !== undefined) {
+      Object.defineProperty(req, "query", {
+        value: parsed.query,
+        writable: false,
+        enumerable: true,
+        configurable: true
+      });
+    }
+    if (parsed.params !== undefined) req.params = parsed.params as Request["params"];
     next();
   };

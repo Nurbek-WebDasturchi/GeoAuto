@@ -22,13 +22,14 @@ export const AuthService = {
     phone: string;
     region: string;
   }) {
-    const exists = await prisma.profile.findUnique({ where: { email: input.email } });
+    const email = input.email.toLowerCase();
+    const exists = await prisma.profile.findUnique({ where: { email } });
     if (exists) throw new AppError(409, "Bu email bilan akkaunt mavjud.");
 
     const passwordHash = await bcrypt.hash(input.password, 12);
     const user = await prisma.profile.create({
       data: {
-        email: input.email.toLowerCase(),
+        email,
         passwordHash,
         fullName: input.fullName,
         phone: input.phone,
