@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#eef8f4"/>
+  <path d="M84 420h632" stroke="#b7d3c5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M128 345l95-104h286l112 101 55 25c22 10 36 32 36 56v25H88v-46c0-27 16-51 40-61v4z" fill="#059669"/>
+  <path d="M238 256h120v88H160l78-88zm145 0h112l88 88H383v-88z" fill="#d1fae5"/>
+  <rect x="130" y="376" width="540" height="55" rx="20" fill="#047857"/>
+  <circle cx="224" cy="435" r="58" fill="#111827"/>
+  <circle cx="224" cy="435" r="25" fill="#e5e7eb"/>
+  <circle cx="576" cy="435" r="58" fill="#111827"/>
+  <circle cx="576" cy="435" r="25" fill="#e5e7eb"/>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1f2937">Hyundai Tucson</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#fefce8"/>
+  <path d="M78 424h644" stroke="#fde68a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M122 354l96-106h300l104 101 50 18c27 10 45 35 45 64v20H84v-43c0-30 19-57 47-67l-9 13z" fill="#ca8a04"/>
+  <path d="M238 262h128v88H160l78-88zm154 0h112l84 88H392v-88z" fill="#fef3c7"/>
+  <rect x="130" y="381" width="538" height="53" rx="22" fill="#a16207"/>
+  <circle cx="224" cy="437" r="56" fill="#111827"/>
+  <circle cx="224" cy="437" r="24" fill="#fefce8"/>
+  <circle cx="578" cy="437" r="56" fill="#111827"/>
+  <circle cx="578" cy="437" r="24" fill="#fefce8"/>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#713f12">BMW X5</text>
+</svg>

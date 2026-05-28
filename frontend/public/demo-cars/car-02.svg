@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f7f3ee"/>
+  <path d="M75 424h650" stroke="#d6c8b8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M150 350l82-100h300l92 96 53 20c24 9 40 32 40 58v20H86v-42c0-29 19-55 47-64l17-6z" fill="#dc2626"/>
+  <path d="M250 262h120v86H180l70-86zm143 0h122l78 86H393v-86z" fill="#fee2e2"/>
+  <rect x="135" y="378" width="530" height="48" rx="20" fill="#991b1b"/>
+  <circle cx="226" cy="432" r="55" fill="#1f2937"/>
+  <circle cx="226" cy="432" r="24" fill="#f3f4f6"/>
+  <circle cx="578" cy="432" r="55" fill="#1f2937"/>
+  <circle cx="578" cy="432" r="24" fill="#f3f4f6"/>
+  <circle cx="657" cy="384" r="13" fill="#fde68a"/>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#44403c">Kia K5</text>
+</svg>

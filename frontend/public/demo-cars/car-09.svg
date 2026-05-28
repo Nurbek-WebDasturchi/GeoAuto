@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f0fdf4"/>
+  <path d="M80 424h640" stroke="#bbf7d0" stroke-width="8" stroke-linecap="round"/>
+  <path d="M126 346l78-95h312l110 98 44 15c28 10 47 36 47 66v20H86v-39c0-33 21-62 52-73l-12 8z" fill="#16a34a"/>
+  <path d="M224 263h130v84H158l66-84zm156 0h122l84 84H380v-84z" fill="#dcfce7"/>
+  <rect x="132" y="378" width="532" height="54" rx="21" fill="#15803d"/>
+  <circle cx="224" cy="435" r="56" fill="#111827"/>
+  <circle cx="224" cy="435" r="24" fill="#f0fdf4"/>
+  <circle cx="576" cy="435" r="56" fill="#111827"/>
+  <circle cx="576" cy="435" r="24" fill="#f0fdf4"/>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#14532d">Lacetti Gentra</text>
+</svg>

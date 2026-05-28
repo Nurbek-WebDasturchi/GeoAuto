@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f8fafc"/>
+  <path d="M82 426h636" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+  <path d="M125 360l86-110h320l104 108 38 16c27 12 44 38 44 67v12H83v-43c0-31 20-58 50-68l-8 18z" fill="#475569"/>
+  <path d="M232 263h136v92H160l72-92zm160 0h124l86 92H392v-92z" fill="#e2e8f0"/>
+  <rect x="132" y="386" width="538" height="46" rx="18" fill="#334155"/>
+  <circle cx="222" cy="438" r="57" fill="#0f172a"/>
+  <circle cx="222" cy="438" r="24" fill="#f8fafc"/>
+  <circle cx="580" cy="438" r="57" fill="#0f172a"/>
+  <circle cx="580" cy="438" r="24" fill="#f8fafc"/>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#334155">Toyota Camry</text>
+</svg>

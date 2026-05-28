@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#ecfeff"/>
+  <path d="M82 423h636" stroke="#a5f3fc" stroke-width="8" stroke-linecap="round"/>
+  <path d="M122 350l100-98h300l106 101 42 14c28 10 47 36 47 66v17H84v-36c0-34 21-64 53-75l-15 11z" fill="#0891b2"/>
+  <path d="M240 265h128v84H162l78-84zm154 0h112l82 84H394v-84z" fill="#cffafe"/>
+  <rect x="130" y="378" width="538" height="54" rx="21" fill="#0e7490"/>
+  <circle cx="225" cy="435" r="56" fill="#111827"/>
+  <circle cx="225" cy="435" r="24" fill="#ecfeff"/>
+  <circle cx="578" cy="435" r="56" fill="#111827"/>
+  <circle cx="578" cy="435" r="24" fill="#ecfeff"/>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#164e63">Nissan Patrol</text>
+</svg>
